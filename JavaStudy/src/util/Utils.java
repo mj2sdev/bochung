@@ -1,6 +1,9 @@
 package util;
 
 import java.lang.reflect.Field;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class Utils {
 	public static String toFields(Object object) {
@@ -28,5 +31,15 @@ public class Utils {
 			}
 		}
 		return builder.toString();
+	}
+	
+	public static void close(Connection connection, PreparedStatement preparedStatement, ResultSet resultSet) {
+		try {
+			if (resultSet != null) resultSet.close();
+			if (preparedStatement != null) preparedStatement.close();
+			if (connection != null) connection.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
