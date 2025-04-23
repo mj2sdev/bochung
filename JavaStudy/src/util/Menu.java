@@ -39,7 +39,7 @@ public class Menu {
 			}
 			
 			if (menu == 0) {
-				System.out.println("종료합니다.");
+				System.out.println("쇼생크 탈출.");
 				return;
 			}
 			
