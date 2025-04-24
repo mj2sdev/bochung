@@ -1,8 +1,12 @@
 package jdbc_member;
 
+import util.Length;
+import util.SuperVO;
+
 public class MemberVO {
 	private int custno;
 	private String custname;
+	@Length(number = 2)
 	private String phone;
 	private String address;
 	private String joindate;

@@ -1,4 +1,4 @@
-package util;
+package jdbc_student;
 
 import java.util.ArrayList;
 import java.util.Arrays;

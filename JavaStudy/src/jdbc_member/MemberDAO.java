@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MemberDAO {
 
@@ -127,5 +129,69 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public boolean update(MemberVO vo) {
+		boolean result = false;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String sql = "UPDATE member_tbl_02 SET phone = ?, address = ? WHERE custno = ?";
+		
+		try {
+			connection = DatabaseManager.getInstance().getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, vo.getPhone());
+			preparedStatement.setString(2, vo.getAddress());
+			preparedStatement.setInt(3, vo.getCustno());
+			
+			preparedStatement.executeUpdate();
+			result = true;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(preparedStatement, connection);
+		}
+		
+		return result;
+	}
+	
+	public List<Map<String, Object>> selectGOAT() {
+		List<Map<String, Object>> list = new ArrayList<>();
+		
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		StringBuilder builder = new StringBuilder();
+		builder
+			.append("SELECT m.custno, m.custname, m.grade, sum(n.price) as total ")
+			.append("FROM member_tbl_02 m ")
+			.append("JOIN money_tbl_02 n ")
+			.append("ON m.custno = n.custno ")
+			.append("GROUP BY m.custno, m.custname, m.grade ")
+			.append("ORDER BY total DESC");
+		
+		String sql = builder.toString();
+		
+		try {
+			connection = DatabaseManager.getInstance().getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			resultSet = preparedStatement.executeQuery();
+			
+			String[] columns = { "custno", "custname", "grade", "total" };
+			while (resultSet.next()) {
+				Map<String, Object> map = new HashMap<>();
+				for (String column : columns)
+					map.put(column, resultSet.getString(column));
+				list.add(map);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(resultSet, preparedStatement, connection);
+		}
+		
+		return list;
 	}
 }
