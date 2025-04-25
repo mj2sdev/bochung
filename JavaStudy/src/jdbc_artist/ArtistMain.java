@@ -27,7 +27,7 @@ public class ArtistMain {
 	private static void selectArtist() throws Exception {
 		List<ArtistVO> list = dao.selectArtists();
 
-		System.out.println("참가자명\t참가번호\t생년월일\t성별\t특기\t소속사");
+		System.out.println("참가자\t참가번\t생년월일\t성별\t특기\t소속사");
 		for (ArtistVO vo : list) {
 			System.out.printf("%s\t%s\t%s\t%s\t%s\t%s\n",
 				vo.getArtist_name(),
@@ -43,7 +43,7 @@ public class ArtistMain {
 	private static void selectPoints() throws Exception {
 		List<ArtistVO> list = dao.selectPoints();
 
-		System.out.println("채점번호\t참가번호\t참가자명\t생년월일\t점수\t멘토");
+		System.out.println("점수번\t참가번\t참가자\t생년월일\t점수\t멘토");
 		for (ArtistVO vo : list) {
 			System.out.printf("%d\t%s\t%s\t%s\t%s\t%s\n",
 				vo.getSerial_no(),
@@ -59,14 +59,15 @@ public class ArtistMain {
 	private static void selectRanking() throws Exception {
 		List<ArtistVO> list = dao.selectRanking();
 
-		System.out.println("참가번호\t참가자명\t성별\t총점\t평균");
+		System.out.println("참가번\t참가자\t성별\t총점\t평균\t순위");
 		for (ArtistVO vo : list) {
-			System.out.printf("%s\t%s\t%s\t%d\t%.1f\n",
+			System.out.printf("%s\t%s\t%s\t%d\t%.2f\t%d\n",
 				vo.getArtist_id(),
 				vo.getArtist_name(),
 				vo.getArtist_gender().equalsIgnoreCase("M") ? "남자" : "여자",
 				vo.getArtist_total(),
-				vo.getArtist_average()
+				vo.getArtist_average(),
+				vo.getRank()
 			);
 		}
 	}

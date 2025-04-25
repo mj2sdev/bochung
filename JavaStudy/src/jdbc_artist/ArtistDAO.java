@@ -107,7 +107,8 @@ public class ArtistDAO {
 		String sql =
 			set("SELECT a.artist_id, a.artist_name, a.artist_gender,")
 			.ln("SUM(p.point) as artist_total,")
-			.ln("AVG(p.point) as artist_average")
+			.ln("AVG(p.point) as artist_average,")
+			.ln("ROW_NUMBER() OVER (order by SUM(p.point) DESC) AS rank")
 			.ln("FROM TBL_ARTIST_201905 a")
 			.ln("JOIN TBL_point_201905 p")
 			.ln("ON p.ARTIST_ID = a.ARTIST_ID")
@@ -126,6 +127,7 @@ public class ArtistDAO {
 			vo.setArtist_gender(resultSet.getString(3));
 			vo.setArtist_total(resultSet.getInt(4));
 			vo.setArtist_average(resultSet.getDouble(5));
+			vo.setRank(resultSet.getInt(6));
 			list.add(vo);
 		}
 
