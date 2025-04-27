@@ -16,7 +16,14 @@ public class ArtistVO {
 
 	private Integer artist_total;
 	private Double artist_average;
+	private Integer rank;
 	
+	public Integer getRank() {
+		return rank;
+	}
+	public void setRank(Integer rank) {
+		this.rank = rank;
+	}
 	public String getArtist_id() {
 		return artist_id;
 	}

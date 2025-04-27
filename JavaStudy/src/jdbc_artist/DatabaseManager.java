@@ -15,8 +15,8 @@ public class DatabaseManager {
 	public Connection getConnection(){
 		Connection connection = null;
 		String driver = "oracle.jdbc.driver.OracleDriver";
-		// String url = "jdbc:oracle:thin:@192.168.30.28:1521:xe";
-		String url = "jdbc:oracle:thin:@221.160.226.39:1521:xe";
+		String url = "jdbc:oracle:thin:@192.168.30.28:1521:xe";
+		// String url = "jdbc:oracle:thin:@221.160.226.39:1521:xe";
 		String id = "sinobi22";
 		String pw = "1234";
 
